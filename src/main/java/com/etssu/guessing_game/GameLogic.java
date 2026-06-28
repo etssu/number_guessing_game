@@ -6,54 +6,44 @@ import java.util.Random;
 public class GameLogic {
     private int maxChances;
     private int pcGuess;
+    private int remainingChances;
 
-    public void chooseDifficulty(int difficulty) {
-        switch (difficulty) {
-            case 1:
-                maxChances = 10;
-                System.out.println("Great! You have selected the Medium difficulty level.\n" +
-                        "Let's start the game!");
-                break;
-            case 2:
-                maxChances = 5;
-                System.out.println("Great! You have selected the Medium difficulty level.\n" +
-                        "Let's start the game!");
-                break;
-            case 3:
-                maxChances = 3;
-                System.out.println("Great! You have selected the Hard difficulty level.\n" +
-                        "Let's start the game!");
-                break;
-            default:
-                System.out.println("Invalid choice.");
-                break;
+    public void chooseDifficulty(Difficulty difficulty) {
+        maxChances = difficulty.getMaxChances();
+        remainingChances = maxChances;
+    }
+
+    public GuessResult makeGuess(int playerGuess) {
+        if (playerGuess == pcGuess) {
+            return GuessResult.CORRECT;
+        } else if (playerGuess > pcGuess) {
+            return GuessResult.TOO_HIGH;
+        }  else {
+            return GuessResult.TOO_LOW;
         }
     }
 
-    public void startGuessing() {
-        pcGuess = generateRandomNumber(); // generate a num between 1 and 100
-
-        for (int trial = 1; trial <= maxChances; trial++) {
-            System.out.print("Enter your guess: ");
-            // entering guess
-            if (isTheSameNum(playerGuess)) {
-                System.out.println("Congratulations! You guessed the correct number in" + trial + " attempts.");
-            } else if (playerGuess < pcGuess) {
-                // playerGuess < pcGuess
-            } else {
-                // playerGuess > pcGuess
-            }
-        }
+    public boolean isGameOver() {
+        remainingChances--;
+        return remainingChances < 0;
     }
-
-    public int generateRandomNumber() {
+    public void generateSecretNumber() {
         Random rand = new Random();
         int min = 1;
         int max = 100;
-        return rand.nextInt((max - min) + 1) + min;
+        pcGuess = rand.nextInt((max - min) + 1) + min;
     }
 
-    public boolean isTheSameNum(int playerGuess) {
-        return playerGuess == pcGuess;
+    public int getMaxChances() {
+        return maxChances;
     }
+
+    public int getSecretNumber() {
+        return pcGuess;
+    }
+
+    public int getRemainingChances() {
+        return remainingChances;
+    }
+
 }
