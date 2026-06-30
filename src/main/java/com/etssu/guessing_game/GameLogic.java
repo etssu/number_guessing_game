@@ -34,21 +34,12 @@ public class GameLogic {
         pcGuess = rand.nextInt((max - min) + 1) + min;
     }
 
-    public int getMaxChances() {
-        return maxChances;
-    }
-
     public int getSecretNumber() {
         return pcGuess;
-    }
-
-    public int getRemainingChances() {
-        return remainingChances;
     }
 
     public int getAttempts() {
         return maxChances - remainingChances;
     }
-
 
 }

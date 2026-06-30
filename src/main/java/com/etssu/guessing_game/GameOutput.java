@@ -5,10 +5,12 @@ import java.util.Scanner;
 public class GameOutput {
     private final InputManager input;
     private final GameLogic logic;
+    private final GameTimer timer;
 
     public GameOutput() {
         this.input = new InputManager(new Scanner(System.in));
         this.logic = new GameLogic();
+        this.timer = new GameTimer();
     }
 
     public void startGame() {
@@ -39,7 +41,7 @@ public class GameOutput {
 
         System.out.println("Great! You have selected the " + difficulty + " difficulty level.");
         System.out.println("Let's start the game!\n");
-
+        timer.start();
 
         while (!logic.isGameOver()) {
             int guess = input.readInt("Enter your guess: ");
@@ -48,9 +50,11 @@ public class GameOutput {
 
             switch (result) {
                 case CORRECT:
+                    long endTime = System.currentTimeMillis();
                     System.out.println("Congratulations! You guessed the correct number in "
                             + logic.getAttempts()
                             + " attempts.\n");
+                    System.out.println("Time: " + timer.calculateTime() + " seconds.");
                     return;
                 case TOO_HIGH:
                     System.out.println("Incorrect! The number is less than " + guess + ".\n");
@@ -62,6 +66,7 @@ public class GameOutput {
         }
         System.out.println("Sorry, you've used all of your chances!");
         System.out.println("The correct number was " + logic.getSecretNumber() + ".\n");
+        System.out.println("Time: " + timer.calculateTime() + " seconds.");
     }
 
     private boolean askToPlayAgain() {
@@ -73,6 +78,7 @@ public class GameOutput {
             }
 
             if (answer.equalsIgnoreCase("no")) {
+                System.out.println("Thanks for playing!");
                 return false;
             }
 
