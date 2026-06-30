@@ -53,8 +53,8 @@ public class GameOutput {
                     long endTime = System.currentTimeMillis();
                     System.out.println("Congratulations! You guessed the correct number in "
                             + logic.getAttempts()
-                            + " attempts.\n");
-                    System.out.println("Time: " + timer.calculateTime() + " seconds.");
+                            + " attempts.");
+                    System.out.println("Time: " + timer.calculateTime() + " seconds.\n");
                     return;
                 case TOO_HIGH:
                     System.out.println("Incorrect! The number is less than " + guess + ".\n");
@@ -65,8 +65,8 @@ public class GameOutput {
             }
         }
         System.out.println("Sorry, you've used all of your chances!");
-        System.out.println("The correct number was " + logic.getSecretNumber() + ".\n");
-        System.out.println("Time: " + timer.calculateTime() + " seconds.");
+        System.out.println("The correct number was " + logic.getSecretNumber() + ".");
+        System.out.println("Time: " + timer.calculateTime() + " seconds.\n");
     }
 
     private boolean askToPlayAgain() {
@@ -78,7 +78,7 @@ public class GameOutput {
             }
 
             if (answer.equalsIgnoreCase("no")) {
-                System.out.println("Thanks for playing!");
+                System.out.println("Thanks for playing!\n");
                 return false;
             }
 
