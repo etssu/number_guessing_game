@@ -22,4 +22,10 @@ public class InputManager {
             }
         }
     }
+
+    public String readString(String prompt) {
+        System.out.print(prompt);
+        scanner.nextLine();
+        return scanner.nextLine();
+    }
 }

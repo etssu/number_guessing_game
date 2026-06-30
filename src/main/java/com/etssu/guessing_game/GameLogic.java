@@ -46,4 +46,9 @@ public class GameLogic {
         return remainingChances;
     }
 
+    public int getAttempts() {
+        return maxChances - remainingChances;
+    }
+
+
 }

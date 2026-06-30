@@ -3,10 +3,21 @@ package com.etssu.guessing_game;
 import java.util.Scanner;
 
 public class GameOutput {
+    private final InputManager input;
+    private final GameLogic logic;
+
+    public GameOutput() {
+        this.input = new InputManager(new Scanner(System.in));
+        this.logic = new GameLogic();
+    }
 
     public void startGame() {
-        InputManager input = new InputManager(new Scanner(System.in));
-        GameLogic logic = new GameLogic();
+        do {
+            playOneGame();
+        } while (askToPlayAgain());
+    }
+
+    public void playOneGame() {
 
         System.out.println("Welcome to the Number Guessing Game!");
         System.out.println("Please select the difficulty level:");
@@ -15,7 +26,7 @@ public class GameOutput {
         Difficulty difficulty;
 
         while (true) {
-             try {
+            try {
                 difficulty = Difficulty.fromChoice(input.readInt("Enter your choice: "));
                 break;
             } catch (IllegalArgumentException e) {
@@ -37,7 +48,8 @@ public class GameOutput {
 
             switch (result) {
                 case CORRECT:
-                    System.out.println("Congratulations! You guessed the correct number in " + logic.getRemainingChances()
+                    System.out.println("Congratulations! You guessed the correct number in "
+                            + logic.getAttempts()
                             + " attempts.\n");
                     return;
                 case TOO_HIGH:
@@ -49,6 +61,22 @@ public class GameOutput {
             }
         }
         System.out.println("Sorry, you've used all of your chances!");
-        System.out.println("The correct number was " + logic.getSecretNumber() + ".");
+        System.out.println("The correct number was " + logic.getSecretNumber() + ".\n");
+    }
+
+    private boolean askToPlayAgain() {
+        while (true) {
+            String answer = input.readString("Do you want to play again? (yes/no): ");
+
+            if (answer.equalsIgnoreCase("yes")) {
+                return true;
+            }
+
+            if (answer.equalsIgnoreCase("no")) {
+                return false;
+            }
+
+            System.out.println("Please enter yes or no.");
+        }
     }
 }
